@@ -131,4 +131,5 @@ temp/
 # End of https://www.toptal.com/developers/gitignore/api/node
 
 #cuentas de servicio
-.json
+df_service.json
+emcare-firebase-admin.json
