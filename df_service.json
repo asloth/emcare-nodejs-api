@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "emcare-99162",
+  "private_key_id": "cd48e36ab4e603fa1f1e53e56c755bd292b7f697",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDbtQA0SlYwxmlE\nTZcFKvc8A8GCFwLX0fh2AbO/wP4LbIRpz6tYBV7Bd9j/XCBgSvkYY2mlnfle+wso\n5sIbkY782yjMW/r91BamyYAiu2lSZ5RA9SpFbEkhNwsZSxr9rUvCMoaessorWhws\nfTFcJueGyKFbzZYs94A9gcTzdWWiUFKzOHabE8+Y7faO0Q4V0w8BvSK9sb0dnQg4\nIAY2l+h/Ft3iTxyeq7cXThwjS2sFeaE5e/Epd356hyZI6vvrjk12mP6uOT1RVdS/\nF4fs1dRiv8ISFE/j4PJNFVC414Lav/DHPHW/TgXIZqTSo4VoVGdQz28vCu/q/E1+\nW2eq9/TbAgMBAAECggEABG1crrEP+yjUXP/I2xEz+cdqZWoVsMgJxXiTtaze5Nej\nJ23iDWkDF5ghpqulkpGQL9FsNiq9W3bPKvWgOn8vx9QzhnXhoRT3/xTKYM8wxR9S\nZnV9csUTocUcYFfm5SIfB6/BWxgazzRtCU+qG5BEVBWQ4tFJ65s+wBgjiHOSJurr\n4GYu+PKYP0uRGi67EYN69xnkmw/IXzXjc5Dj2Zor+E72TAmkzZlUii4r4YoXjcVI\nGhwP/rfsi2kq786cqpwvK/vOBMe9qAvqk57JtUsWrfP8riWiXm0zCGSrIeyGnMz7\nb/N1/Pi3Oz7Id27HifsYhRG67N7qA9IkWAiVFUlo2QKBgQDx2LtcwbP/8OJ0L0Ff\nCuMVKz8wtu1hOVP2/0VN/kteT163F1OR7cdNHibqd6RKE5FU3c2wx7pILlajPhD0\n5212qa7ct3L05DpRvrWUwocldjp98VAf8p1mPRlFDGzkLTGyJn8aDqATAnfVQQTt\ne0SaHUJXDCs6uJ9nHsIm7OkmPQKBgQDokJS3sjkAzLgJkzJkhIfmuktyIdS2p3th\nChvZvQFeocF+fcOCxgjyihfyBuxas1NKRCdtUfmudZMJipIiEs/3wuqY8+nUAGak\n3DeCo2MysiiPWuZIWxzhtRZijyI1lgXrye71BS2yHKi7NhzfqKAfrCfdv3+Ajy/u\n6FsK9GVQ9wKBgQCOtHOCPS5IVMxbAFNTkKoEILuttBMILnq0IVa0uduhL7ZU1SfT\n0PmsMKGH8sb3iupTqHmp2YC6/NTUiFgbGsAFqARtarYjeNRMzfp5Z/u1CDllfVHp\nOBDWdjEGBFnwnhZX581SA9VCwk8Rf8c3lmgZhDBUCvMrOCue/pBTxbGhhQKBgHxc\nW/pDBnJkBoGwQcE4kYeS1SdJ6fpmYvaINk5f4GyfKN4gGD1E8qHnsFhO1XLG8+IB\nweeWb2KYIrF2dSBdWPJPO63guIgSUtETpWdpQXFpjYDjBcNpXW9gq4C2s39eIvps\nOCizxTS6WIwLqrL68+0b3RGaBm9Tojkp7Q1VlRwPAoGAaXdy9GVgMbhv6TF3Ax+t\nwA75bjXv00K2Xiu857mVuFOTReaLhqGGVbaWbOrzvEKM5f3Ja9qATMSGGK2PvOcJ\nk0OgQyNgusgtAYOmHDGK1uqAI6bCunF6yDwjg/ymDS4ZDjvyuj7DOuvu0jBvf7+C\nvzpcoZvEkoyhWGWC4A+QJbE=\n-----END PRIVATE KEY-----\n",
+  "client_email": "dialogflow-sa@emcare-99162.iam.gserviceaccount.com",
+  "client_id": "104791695875010679879",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/dialogflow-sa%40emcare-99162.iam.gserviceaccount.com"
+}
