@@ -4,7 +4,7 @@ import { detect_intent_text } from './apis/ibm.js';
 import { detectIntent } from './apis/dialogflow.js';
 import { saveSentiment } from './apis/firebase.js';
 
-const port = 3000;
+const port = process.env.PORT || 3000;
 const app = express();
 app.use(express.urlencoded({extended:true}));
 
