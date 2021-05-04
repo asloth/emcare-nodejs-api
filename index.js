@@ -6,7 +6,7 @@ import { saveSentiment } from './apis/firebase.js';
 
 const port = 3000;
 const app = express();
-app.use(body_parser.urlencoded({extended:true}));
+app.use(express.urlencoded({extended:true}));
 
 app.get('/', (req, res) => {
   res.send('Hello World!')
@@ -15,7 +15,7 @@ app.get('/', (req, res) => {
 app.post('/ibm', async (req, res) => {
    let text = req.body.message;
    let response = await detect_intent_text(text);
-   saveSentiment("m0UQsXRzTvGQP5i62TUm", response);
+   saveSentiment( req.body.userid, response);
    res.json(response);
 })
 
