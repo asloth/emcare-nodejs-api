@@ -9,7 +9,9 @@ const app = express();
 app.use(express.urlencoded({extended:true}));
 
 app.get('/', (req, res) => {
-  res.send('Hello World!')
+  res.statusCode = 200;
+  res.setHeader('Content-Type', 'text/html');
+  res.end('<h1>Hello World</h1>');
 })
 
 app.post('/ibm', async (req, res) => {
