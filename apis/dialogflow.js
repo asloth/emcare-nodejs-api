@@ -25,8 +25,9 @@ export async function detectIntent(query) {
 
     const responses = await sessionClient.detectIntent(request);
     const responseMessages = responses[0].queryResult.fulfillmentMessages;
-
-    console.log(responses)
+    responseMessages[0].intentDisplayName = responses[0].queryResult.intent.displayName;
+    console.log(responseMessages )
+    //console.log(responses[0].queryResult.intent.displayName )
 
     return responseMessages;
 }
