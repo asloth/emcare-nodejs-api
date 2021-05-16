@@ -1,8 +1,8 @@
 import express from 'express';
-import body_parser from 'body-parser';
 import { detect_intent_text } from './apis/ibm.js';
 import { detectIntent } from './apis/dialogflow.js';
 import { saveSentiment } from './apis/firebase.js';
+import { getTodaySentiment } from './apis/firebase.js';
 
 const port = process.env.PORT || 3000;
 const app = express();
@@ -24,6 +24,11 @@ app.post('/ibm', async (req, res) => {
 app.post('/dialog', async (req, res) => {
     const response = await detectIntent(req.body.message);
     res.json(response);
+})
+
+app.post('/get-sentiment', async (req, res) => {
+  const response = await getTodaySentiment(req.body.userid);
+  res.json(response);
 })
 
 app.listen(port, () => {
