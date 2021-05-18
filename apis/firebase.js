@@ -9,7 +9,7 @@ const db = admin.firestore();
 
 export async function saveSentiment(userId, sentiment){
     let dateNow = new Date();
-    const sentimentDate = dateNow.today();
+    
     const id_doc = dateNow.getDate() + '-' + dateNow.getMonth() + '-' + dateNow.getFullYear() + ',' + dateNow.getHours() + ':' + dateNow.getMinutes() + ':' + dateNow.getSeconds() + ':' + dateNow.getMilliseconds();
     
     const userInfo = await db.collection('users').doc(userId).collection('sentiments').doc(id_doc).set({
