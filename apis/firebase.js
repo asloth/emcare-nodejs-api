@@ -20,10 +20,12 @@ export async function saveSentiment(userId, sentiment){
 
 }
 
-export async function getTodaySentiment(userid){
+export async function getSentiment(userid){
     let dateNow = new Date();
     const today = dateNow.getDate() + '-' + dateNow.getMonth() + '-' + dateNow.getFullYear();
     let todayFeelings = [];
+    let userFeelings = [];
+    let response = [];
     await db.collection('users').doc(userid).collection("sentiments")
             .get()
             .then((querySnapshot) => {
@@ -32,11 +34,14 @@ export async function getTodaySentiment(userid){
                     if ( doc.id.includes(today)){
                         todayFeelings.push(doc.data());
                     }
+                    userFeelings.push(doc.data());
+
                 });
             })
             .catch((error) => {
                 console.log("Error getting documents: ", error);
             });
-
-    return await todayFeelings;
+             response.push(todayFeelings);
+             response.push(userFeelings);
+    return await response;
 }

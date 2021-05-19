@@ -1,17 +1,28 @@
 import express from 'express';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import { detect_intent_text } from './apis/ibm.js';
 import { detectIntent } from './apis/dialogflow.js';
 import { saveSentiment } from './apis/firebase.js';
-import { getTodaySentiment } from './apis/firebase.js';
+import { getSentiment } from './apis/firebase.js';
 
 const port = process.env.PORT || 3000;
 const app = express();
 app.use(express.urlencoded({extended:true}));
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 app.get('/', (req, res) => {
   res.statusCode = 200;
   res.setHeader('Content-Type', 'text/html');
-  res.end('<h1>Hello World</h1>');
+  res.end('<h1>Web utilizada para alojar servicios de la aplicación móvil Emcare</h1>');
+})
+
+app.get('/user-compromise', (req, res) => {
+  res.sendFile(path.resolve(__dirname, "views/user-compromise.html"));
+})
+
+app.get('/privacy-policy', (req, res) => {
+  res.sendFile(path.resolve(__dirname, "views/privacy-policy.html"));
 })
 
 app.post('/ibm', async (req, res) => {
@@ -27,7 +38,7 @@ app.post('/dialog', async (req, res) => {
 })
 
 app.post('/get-sentiment', async (req, res) => {
-  const response = await getTodaySentiment(req.body.userid);
+  const response = await getSentiment(req.body.userid);
   res.json(response);
 })
 
