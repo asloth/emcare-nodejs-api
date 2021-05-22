@@ -45,3 +45,10 @@ export async function getSentiment(userid){
              response.push(userFeelings);
     return await response;
 }
+
+export async function setNewUser(userId, userName){
+    const userDb = await db.collection('users').doc(userId); 
+    return await userDb.set({
+        name: userName,
+    })
+}

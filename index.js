@@ -1,10 +1,11 @@
-import express from 'express';
+import express, { response } from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { detect_intent_text } from './apis/ibm.js';
 import { detectIntent } from './apis/dialogflow.js';
 import { saveSentiment } from './apis/firebase.js';
 import { getSentiment } from './apis/firebase.js';
+import { setNewUser } from './apis/firebase.js';
 
 const port = process.env.PORT || 3000;
 const app = express();
@@ -39,6 +40,11 @@ app.post('/dialog', async (req, res) => {
 
 app.post('/get-sentiment', async (req, res) => {
   const response = await getSentiment(req.body.userid);
+  res.json(response);
+})
+
+app.post('/new-user', async (req, res) => {
+  const response = await setNewUser(req.body.userid, req.body.username);
   res.json(response);
 })
 
