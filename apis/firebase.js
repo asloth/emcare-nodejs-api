@@ -1,5 +1,6 @@
 import admin from 'firebase-admin';
 import serviceAccount from '../emcare-firebase-admin.json';
+import axios from 'axios';
 
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount)
@@ -16,8 +17,37 @@ export async function saveSentiment(userId, sentiment){
         date: dateNow,
         sentiment: sentiment,
     });
-    
 
+    const regs = await db.collection('users').doc(userId).collection("sentiments").get() ;
+    
+    return regs.size ;
+}
+
+export async function getTendency(userid){
+
+    let data = [];
+    await db.collection('users').doc(userid).collection("sentiments")
+            .get()
+            .then((querySnapshot) => {
+                querySnapshot.forEach((doc) => {
+                    // doc.data() is never undefined for query doc snapshots
+                    data.push(doc.data());
+                });
+            })
+            .catch((error) => {
+                console.log("Error getting documents: ", error);
+            });
+            
+            axios
+                .post('https://tone-analyzer-spanish-api.herokuapp.com/analysis', {
+                data: data
+                })
+                .then(res => {
+                    console.log(res.data)
+                })
+                .catch(error => {
+                    console.error(error)
+                })
 }
 
 export async function getSentiment(userid){
@@ -51,4 +81,19 @@ export async function setNewUser(userId, userName){
     return await userDb.set({
         name: userName,
     })
+}
+
+export async function getAllFeelings(userid){
+    let userFeelings = [];
+    await db.collection('users').doc(userid).collection("sentiments")
+            .get()
+            .then((querySnapshot) => {
+                querySnapshot.forEach((doc) => {
+                    // doc.data() is never undefined for query doc snapshots
+                    userFeelings.push(doc.data());
+                });
+            })
+            .catch((error) => {
+                console.log("Error getting documents: ", error);
+            });
 }

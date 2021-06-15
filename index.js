@@ -6,6 +6,7 @@ import { detectIntent } from './apis/dialogflow.js';
 import { saveSentiment } from './apis/firebase.js';
 import { getSentiment } from './apis/firebase.js';
 import { setNewUser } from './apis/firebase.js';
+import { getTendency } from './apis/firebase.js';
 
 const port = process.env.PORT || 3000;
 const app = express();
@@ -29,7 +30,10 @@ app.get('/privacy-policy', (req, res) => {
 app.post('/ibm', async (req, res) => {
    let text = req.body.message;
    let response = await detect_intent_text(text);
-   saveSentiment( req.body.userid, response);
+   let nregs = await saveSentiment( req.body.userid, response);
+   if (nregs > 1){
+      await getTendency(req.body.userid);
+   }
    res.json(response);
 })
 
