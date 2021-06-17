@@ -4,7 +4,7 @@ import axios from 'axios';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { uuid } from 'uuidv4';
+import { v4 } from 'uuid';
 
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
@@ -56,7 +56,7 @@ export async function getTendency(userid){
                         console.log('File created');
                         console.log(err);
                     });
-                    const uuidv4 = uuid();
+                    const uuidv4 = v4();
                     bucket.upload(path.resolve(__dirname,'../image.png'),  {
                         destination: userid+'.png',
                         metadata: {
@@ -64,15 +64,12 @@ export async function getTendency(userid){
                                 firebaseStorageDownloadTokens: uuidv4,
                             }
                         },
-                      });
-                    
+                      });  
                 })
                 .catch(error => {
                     console.error(error)
                 })
-
-                
-                
+ 
 }
 
 export async function getSentiment(userid){
