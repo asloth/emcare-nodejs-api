@@ -1,12 +1,19 @@
 import admin from 'firebase-admin';
 import serviceAccount from '../emcare-firebase-admin.json';
 import axios from 'axios';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { uuid } from 'uuidv4';
 
 admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount)
+    credential: admin.credential.cert(serviceAccount),
+    storageBucket: 'emcare-99162.appspot.com'
 });
 
 const db = admin.firestore(); 
+const bucket = admin.storage().bucket();
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export async function saveSentiment(userId, sentiment){
     let dateNow = new Date();
@@ -37,17 +44,35 @@ export async function getTendency(userid){
             .catch((error) => {
                 console.log("Error getting documents: ", error);
             });
-            
+            let base64Image;
             axios
                 .post('https://tone-analyzer-spanish-api.herokuapp.com/analysis', {
                 data: data
                 })
                 .then(res => {
-                    console.log(res.data)
+                    console.log(res.data.pendiente)
+                    base64Image = res.data.image;
+                    fs.writeFile('image.png', base64Image, {encoding: 'base64'}, function(err) {
+                        console.log('File created');
+                        console.log(err);
+                    });
+                    const uuidv4 = uuid();
+                    bucket.upload(path.resolve(__dirname,'../image.png'),  {
+                        destination: userid+'.png',
+                        metadata: {
+                            metadata: {
+                                firebaseStorageDownloadTokens: uuidv4,
+                            }
+                        },
+                      });
+                    
                 })
                 .catch(error => {
                     console.error(error)
                 })
+
+                
+                
 }
 
 export async function getSentiment(userid){
