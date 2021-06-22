@@ -45,6 +45,8 @@ export async function getTendency(userid){
                 console.log("Error getting documents: ", error);
             });
             let base64Image;
+            let publicUrl;
+            let slope, asymmetry, variation;
             axios
                 .post('https://tone-analyzer-spanish-api.herokuapp.com/analysis', {
                 data: data
@@ -52,6 +54,9 @@ export async function getTendency(userid){
                 .then(res => {
                     console.log(res.data.pendiente)
                     base64Image = res.data.image;
+                    slope = res.data.pendiente;
+                    asymmetry = res.data.asimetria;
+                    variation = res.data.variacion;
                     fs.writeFile('image.png', base64Image, {encoding: 'base64'}, function(err) {
                         console.log('File created');
                         console.log(err);
@@ -64,6 +69,14 @@ export async function getTendency(userid){
                                 firebaseStorageDownloadTokens: uuidv4,
                             }
                         },
+                      }, function (err, file){
+                        publicUrl = file.publicUrl();
+                        db.collection('users').doc(userid).set({
+                            analysis_url: publicUrl,
+                            slope: slope,
+                            asymmetry: asymmetry,
+                            variation: variation,
+                        }, {merge:true});
                       });  
                 })
                 .catch(error => {
@@ -118,4 +131,8 @@ export async function getAllFeelings(userid){
             .catch((error) => {
                 console.log("Error getting documents: ", error);
             });
+}
+
+export async function getTendencyPicture (userid){
+
 }
