@@ -109,7 +109,7 @@ export async function getSentiment(userid){
             });
              response.push(todayFeelings);
              response.push(userFeelings);
-    return await response;
+    return response;
 }
 
 export async function setNewUser(userId, userName){
