@@ -7,6 +7,7 @@ import { saveSentiment } from './apis/firebase.js';
 import { getSentiment } from './apis/firebase.js';
 import { setNewUser } from './apis/firebase.js';
 import { getTendency } from './apis/firebase.js';
+import { getDataAnalysis } from './apis/firebase.js';
 
 const port = process.env.PORT || 3000;
 const app = express();
@@ -50,6 +51,12 @@ app.post('/get-sentiment', async (req, res) => {
 app.post('/new-user', async (req, res) => {
   const response = await setNewUser(req.body.userid, req.body.username);
   res.json(response);
+})
+
+app.post('/get-analysis', async (req, res) => {
+  const response = await getDataAnalysis(req.body.userid);
+  console.log(response);
+  res.json(response)
 })
 
 app.listen(port, () => {

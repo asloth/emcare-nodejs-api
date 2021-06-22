@@ -134,6 +134,21 @@ export async function getAllFeelings(userid){
             });
 }
 
-export async function getTendencyPicture (userid){
-
+export async function getDataAnalysis (userid){
+    let dataAnalysis = {};
+    await db.collection('users').doc(userid)
+            .get()
+            .then((documentSnapshot) => {
+                dataAnalysis.slope =  documentSnapshot.get('slope');
+                dataAnalysis.asymmetry = documentSnapshot.get('asymmetry');
+                dataAnalysis.variation = documentSnapshot.get('variation');
+                dataAnalysis.analysis_url = documentSnapshot.get('analysis_url');
+                dataAnalysis.username = documentSnapshot.get('name');
+                
+            })
+            .catch((error) => {
+                console.log("Error getting documents: ", error);
+            });
+            return dataAnalysis;
+            
 }
