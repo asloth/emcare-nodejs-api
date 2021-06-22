@@ -70,6 +70,7 @@ export async function getTendency(userid){
                             }
                         },
                       }, function (err, file){
+                        file.makePublic();
                         publicUrl = file.publicUrl();
                         db.collection('users').doc(userid).set({
                             analysis_url: publicUrl,
