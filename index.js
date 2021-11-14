@@ -1,6 +1,7 @@
 import express, { response } from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import Cors from "cors";
 import { detect_intent_text } from './apis/ibm.js';
 import { detectIntent } from './apis/dialogflow.js';
 import { saveSentiment } from './apis/firebase.js';
@@ -12,6 +13,7 @@ import { getDataAnalysis } from './apis/firebase.js';
 const port = process.env.PORT || 3000;
 const app = express();
 app.use(express.urlencoded({extended:true}));
+app.use(Cors());
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 app.get('/', (req, res) => {
