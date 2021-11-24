@@ -11,6 +11,7 @@ admin.initializeApp({
     storageBucket: 'emcare-99162.appspot.com'
 });
 
+const auth = admin.auth()
 const db = admin.firestore(); 
 const bucket = admin.storage().bucket();
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -151,4 +152,14 @@ export async function getDataAnalysis (userid){
             });
             return dataAnalysis;
             
+}
+
+export async function getAllUsers(){
+    let userdocs = [];
+    const listUsers = await auth.listUsers();
+    listUsers.users.forEach((userRecord) => {
+        console.log('user', userRecord.toJSON());
+        userdocs.push(userRecord);
+      });
+    return userdocs;
 }
