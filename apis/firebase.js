@@ -49,41 +49,56 @@ export async function getTendency(userid){
             let publicUrl;
             let slope, asymmetry, variation;
             axios
-                .post('https://tone-analyzer-spanish-api.herokuapp.com/analysis', {
-                data: data
-                })
-                .then(res => {
-                    console.log(res.data.pendiente)
-                    base64Image = res.data.image;
-                    slope = res.data.pendiente;
-                    asymmetry = res.data.asimetria;
-                    variation = res.data.variacion;
-                    fs.writeFile('image.png', base64Image, {encoding: 'base64'}, function(err) {
-                        console.log('File created');
-                        console.log(err);
-                    });
-                    const uuidv4 = v4();
-                    bucket.upload(path.resolve(__dirname,'../image.png'),  {
-                        destination: userid+'.png',
-                        metadata: {
-                            metadata: {
-                                firebaseStorageDownloadTokens: uuidv4,
-                            }
-                        },
-                      }, function (err, file){
-                        file.makePublic();
-                        publicUrl = file.publicUrl();
-                        db.collection('users').doc(userid).set({
-                            analysis_url: publicUrl,
-                            slope: slope,
-                            asymmetry: asymmetry,
-                            variation: variation,
-                        }, {merge:true});
-                      });  
-                })
-                .catch(error => {
-                    console.error(error)
-                })
+              .post(
+                "https://tone-analyzer-spanish-api.herokuapp.com/analysis",
+                {
+                  data: data,
+                }
+              )
+              .then((res) => {
+                console.log(res.data.pendiente);
+                base64Image = res.data.image;
+                slope = res.data.pendiente;
+                asymmetry = res.data.asimetria;
+                variation = res.data.variacion;
+                fs.writeFile(
+                  "image.png",
+                  base64Image,
+                  { encoding: "base64" },
+                  function (err) {
+                    console.log("File created");
+                    console.log(err);
+                  }
+                );
+                const uuidv4 = v4();
+                bucket.upload(
+                  path.resolve(__dirname, "../image.png"),
+                  {
+                    destination: userid + ".png",
+                    metadata: {
+                      metadata: {
+                        firebaseStorageDownloadTokens: uuidv4,
+                      },
+                    },
+                  },
+                  function (err, file) {
+                    file.makePublic();
+                    publicUrl = file.publicUrl();
+                    db.collection("users").doc(userid).set(
+                      {
+                        analysis_url: publicUrl,
+                        slope: slope,
+                        asymmetry: asymmetry,
+                        variation: variation,
+                      },
+                      { merge: true }
+                    );
+                  }
+                );
+              })
+              .catch((error) => {
+                console.error(error);
+              });
  
 }
 

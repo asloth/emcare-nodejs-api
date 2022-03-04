@@ -10,6 +10,7 @@ import { setNewUser } from './apis/firebase.js';
 import { getTendency } from './apis/firebase.js';
 import { getDataAnalysis } from './apis/firebase.js';
 import { getAllUsers } from './apis/firebase.js';
+import { emotionRecognition } from './apis/model.js';
 
 const port = process.env.PORT || 3000;
 const app = express();
@@ -30,7 +31,7 @@ app.get('/user-compromise', (req, res) => {
 app.get('/privacy-policy', (req, res) => {
   res.sendFile(path.resolve(__dirname, "views/privacy-policy.html"));
 })
-
+//Ruta para reconocimmiento de emociones
 app.post('/ibm', async (req, res) => {
    let text = req.body.message;
    let response = await detect_intent_text(text);
@@ -40,27 +41,33 @@ app.post('/ibm', async (req, res) => {
    }
    res.json(response);
 })
-
+//Ruta para reconocimmiento de emociones
+app.post('/emotion', async (req, res) => {
+  let text = req.body.message;
+   let response = await emotionRecognition(text);
+   res.json(response);
+})
+//Ruta para comunicación con dialogflow
 app.post('/dialog', async (req, res) => {
     const response = await detectIntent(req.body.message);
     res.json(response);
 })
-
+//Ruta para obtener emociones por usuario
 app.post('/get-sentiment', async (req, res) => {
   const response = await getSentiment(req.body.userid);
   res.json(response);
 })
-
+//Ruta para agregar un usuario
 app.post('/new-user', async (req, res) => {
   const response = await setNewUser(req.body.userid, req.body.username);
   res.json(response);
 })
-
+//Ruta para obtener la tendencia de las emociones
 app.post('/get-analysis', async (req, res) => {
   const response = await getDataAnalysis(req.body.userid);
   res.json(response)
 })
-
+//Ruta para listar a todos los usuarios
 app.post('/users', async (req, res) => {
   const response = await getAllUsers();
   console.log(response);
