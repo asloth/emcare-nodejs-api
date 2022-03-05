@@ -1,19 +1,16 @@
 import axios from "axios";
-import { response } from "express";
 
 export async function emotionRecognition(text) {
-  let rs;
-  await axios
+  return await axios
     .post("http://68.183.124.29/distilbert", {
       data: {
         message: text,
       },
     })
-    .then(function (response) {
-      rs = response.data;
+    .then((response) => {
+      return response.data;
     })
-    .catch(function (error) {
+    .catch((error) => {
       console.log(error);
     });
-  return rs;
 }
