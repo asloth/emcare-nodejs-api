@@ -4,9 +4,8 @@ import { fileURLToPath } from 'url';
 import Cors from "cors";
 import { detect_intent_text } from './apis/ibm.js';
 import { detectIntent } from './apis/dialogflow.js';
-import { saveSentiment } from './apis/firebase.js';
-import { getSentiment } from './apis/firebase.js';
-import { setNewUser } from './apis/firebase.js';
+import { getSentiment, setNewPsicologist,saveSentiment  } from './apis/firebase.js';
+import { setNewUser, login } from './apis/firebase.js';
 import { getTendency } from './apis/firebase.js';
 import { getDataAnalysis } from './apis/firebase.js';
 import { getAllUsers } from './apis/firebase.js';
@@ -14,6 +13,7 @@ import { emotionRecognition } from './apis/model.js';
 
 const port = process.env.PORT || 3000;
 const app = express();
+var router = express.Router();
 app.use(express.urlencoded({extended:true}));
 app.use(Cors());
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -21,7 +21,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 app.get('/', (req, res) => {
   res.statusCode = 200;
   res.setHeader('Content-Type', 'text/html');
-  res.end('<h1>Web utilizada para alojar servicios de la aplicación móvil Emcare</h1>');
+  res.end('<h1>Web utilizada para alojar servicios de la aplicacion movil Emcare</h1>');
 })
 
 app.get('/user-compromise', (req, res) => {
@@ -73,6 +73,18 @@ app.post('/users', async (req, res) => {
   console.log(response);
   res.json(response);
 })
+
+// Login
+app.post("/login", async (req, res) => {
+  const response = await login(req.body.username, req.body.password);
+  res.json(response);
+  });
+
+  //Resgistrar un psicologo
+app.post("/register", async (req, res) => {
+  const response = await setNewPsicologist(req.body.username, req.body.password);
+  res.json(response);
+  });
 
 app.listen(port, () => {
   console.log(`Servidor ejecutándose en: http://localhost:${port}`)

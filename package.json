@@ -15,11 +15,13 @@
     "@google-cloud/dialogflow": "^3.5.0",
     "@google-cloud/storage": "^5.8.5",
     "axios": "^0.21.1",
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "firebase-admin": "^9.7.0",
     "ibm-watson": "^6.0.4",
+    "jsonwebtoken":"^8.5.1",
     "uuidv4": "^6.2.10"
   },
   "devDependencies": {

@@ -1,10 +1,13 @@
 import admin from 'firebase-admin';
+//import serviceAccount from "../emcare-firebase-admin.json";
 import serviceAccount from "../emcare-firebase-admin.json" assert { type: "json" };
 import axios from 'axios';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { v4 } from 'uuid';
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
 
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
@@ -177,4 +180,50 @@ export async function getAllUsers(){
         userdocs.push(userRecord);
       });
     return userdocs;
+}
+
+export async function setNewPsicologist(username, password ){
+  if (!(password && username)) {
+    return "All input is required";
+  }
+  
+  const oldUser = await db.collection('psicologists').doc(username).get();
+  
+  if (oldUser.exists) {
+    return "User Already Exist. Please Login";
+  }
+
+  let encryptedPassword = await bcrypt.hash(password, 10);
+
+  return await db.collection('psicologists').doc(username).set({
+    name: username,
+    password: encryptedPassword,
+  }) ;
+  
+}
+
+export async function login(username, password){
+
+  //verificamos que los inputs esten llenos
+  if (!(password && username)) {
+    return "All input is required";
+  }
+  
+  //verificamos que el user exista
+  const user = await db.collection('psicologists').doc(username).get();
+  
+  if (!user.exists){
+    return "User not found";
+  }
+  
+  //comparamos las contraseñas para ver si coinciden
+  if (! await bcrypt.compare(password, user.get('password'))){
+    return "Passwords dont match";
+  }
+
+  return jwt.sign({
+    username: user.username
+  }, "secretito", {
+    expiresIn: "72h",
+  });
 }
