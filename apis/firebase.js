@@ -174,12 +174,14 @@ export async function getDataAnalysis (userid){
 
 export async function getAllUsers(){
     let userdocs = [];
-    const listUsers = await auth.listUsers();
-    listUsers.users.forEach((userRecord) => {
-        console.log('user', userRecord.toJSON());
-        userdocs.push(userRecord);
+    await db.collection('users').get().then((documentSnapshot) => {
+      documentSnapshot.forEach((doc) => {
+        userdocs.push(doc.data());
       });
-    return userdocs;
+    }).catch((error) => {
+      console.log("Error getting documents: ", error);
+    });
+    return userdocs;// get collection
 }
 
 export async function setNewPsicologist(username, password ){
