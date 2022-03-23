@@ -45,6 +45,7 @@ app.post('/ibm', async (req, res) => {
 app.post('/emotion', async (req, res) => {
   let text = req.body.message;
    let response = await emotionRecognition(text);
+   let nregs = await saveSentiment( req.body.userid, response);
    res.json(response);
 })
 //Ruta para comunicación con dialogflow
