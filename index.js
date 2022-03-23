@@ -70,7 +70,6 @@ app.post('/get-analysis', async (req, res) => {
 //Ruta para listar a todos los usuarios
 app.post('/users', async (req, res) => {
   const response = await getAllUsers();
-  console.log(response);
   res.json(response);
 })
 
