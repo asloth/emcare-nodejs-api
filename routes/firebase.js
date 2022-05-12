@@ -1,6 +1,6 @@
 import admin from 'firebase-admin';
-import serviceAccount from "../emcare-firebase-admin.json";
-//import serviceAccount from "../emcare-firebase-admin.json" assert { type: "json" };
+//import serviceAccount from "../emcare-firebase-admin.json";
+import serviceAccount from "../emcare-firebase-admin.json" assert { type: "json" };
 import axios from 'axios';
 import fs from 'fs';
 import path from 'path';
