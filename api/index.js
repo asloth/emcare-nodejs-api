@@ -2,13 +2,13 @@ import express, { response } from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import Cors from "cors";
-import { detect_intent_text } from '../routes/ibm.js.js.js';
-import { detectIntent } from '../routes/dialogflow.js.js.js';
-import { getSentiment, setNewPsicologist,saveSentiment  } from '../routes/firebase.js.js.js';
-import { setNewUser, login } from '../routes/firebase.js.js.js';
-import { getTendency } from '../routes/firebase.js.js.js';
-import { getDataAnalysis } from '../routes/firebase.js.js.js';
-import { getAllUsers } from '../routes/firebase.js.js.js';
+import { detect_intent_text } from '../routes/ibm.js';
+import { detectIntent } from '../routes/dialogflow.js';
+import { getSentiment, setNewPsicologist,saveSentiment  } from '../routes/firebase.js';
+import { setNewUser, login } from '../routes/firebase.js';
+import { getTendency } from '../routes/firebase.js';
+import { getDataAnalysis } from '../routes/firebase.js';
+import { getAllUsers } from '../routes/firebase.js';
 import { emotionRecognition } from '../routes/model.js';
 
 const port = process.env.PORT || 3000;
@@ -86,4 +86,4 @@ app.post("/register", async (req, res) => {
   res.json(response);
   });
 
-module.exports = app;
+export default app;
