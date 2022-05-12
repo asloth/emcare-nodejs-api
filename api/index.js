@@ -89,3 +89,5 @@ app.post("/api/register", async (req, res) => {
 app.listen(port, () => {
   console.log(`Servidor ejecutándose en: http://localhost:${port}`)
 })
+
+module.exports = app;
