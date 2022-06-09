@@ -2,7 +2,9 @@
 import dialogflow from '@google-cloud/dialogflow';
 
 // Instantiates a session client
-const sessionClient = new dialogflow.SessionsClient();
+const sessionClient = new dialogflow.SessionsClient({
+    servicePath: '../df-service.df'
+});
 
 export async function detectIntent(query) {
 
