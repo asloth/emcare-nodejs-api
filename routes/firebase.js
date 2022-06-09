@@ -134,6 +134,16 @@ export async function getSentiment(userid){
     return response;
 }
 
+export async function getUser(userId) {
+  return await (await db.collection('users').doc(userid).get()).data();
+}
+
+export function updateUser(userId, newname){
+  return await db.collection('users').doc(userId).update({
+   name: newname,
+ });
+}
+
 export async function setNewUser(userId, userName){
     const userDb = await db.collection('users').doc(userId); 
     return await userDb.set({

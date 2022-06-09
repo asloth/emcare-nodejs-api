@@ -4,7 +4,7 @@ import { fileURLToPath } from 'url';
 import Cors from "cors";
 import { detect_intent_text } from '../routes/ibm.js';
 import { detectIntent } from '../routes/dialogflow.js';
-import { getSentiment, setNewPsicologist,saveSentiment  } from '../routes/firebase.js';
+import { getSentiment, setNewPsicologist,saveSentiment, getUser, updateUser  } from '../routes/firebase.js';
 import { setNewUser, login } from '../routes/firebase.js';
 import { getTendency } from '../routes/firebase.js';
 import { getDataAnalysis } from '../routes/firebase.js';
@@ -74,7 +74,7 @@ app.post('/users', async (req, res) => {
   res.json(response);
 })
 
-// Login
+// Login for admin web
 app.post("/login", async (req, res) => {
   const response = await login(req.body.username, req.body.password);
   res.json(response);
@@ -85,5 +85,16 @@ app.post("/register", async (req, res) => {
   const response = await setNewPsicologist(req.body.username, req.body.password);
   res.json(response);
   });
+
+app.post("/get-user", async (req, res) => {
+  const response = await getUser(req.body.userid);
+  res.json(response);
+})
+
+app.post("/update-user", async (req, res) => {
+  const response = await updateUser(req.body.userid, req.body.newname);
+  
+  res.json(response);
+})
 
 export default app;
