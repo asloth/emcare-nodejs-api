@@ -135,11 +135,11 @@ export async function getSentiment(userid){
 }
 
 export async function getUser(userId) {
-  const userdata = await db.collection('users').doc(userid).get();
+  const userdata = await db.collection('users').doc(userId).get();
   return userdata.data() ;
 }
 
-export function updateUser(userId, newname){
+export async function updateUser(userId, newname){
   const oldUser = await db.collection('users').doc(userId)
   return await oldUser.update({
    name: newname,
