@@ -86,15 +86,6 @@ app.post("/register", async (req, res) => {
   res.json(response);
   });
 
-app.post("/get-user", async (req, res) => {
-  const response = await getUser(req.body.userid);
-  res.json(response);
-});
 
-app.post("/update-user", async (req, res) => {
-  const response = await updateUser(req.body.userid, req.body.newname);
-  
-  res.json(response);
-});
 
 export default app;
