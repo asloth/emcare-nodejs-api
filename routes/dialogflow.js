@@ -4,7 +4,7 @@ import dialogflow from '@google-cloud/dialogflow';
 
 // Instantiates a session client
 const sessionClient = new dialogflow.SessionsClient({
-    keyFilename: "../df-service.json"
+    keyFilename: process.env.GOOGLE_APPLICATION_CREDENTIALS
 });
 
 export async function detectIntent(query) {
