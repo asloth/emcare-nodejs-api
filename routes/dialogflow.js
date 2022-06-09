@@ -1,9 +1,10 @@
 // Imports the Dialogflow library
 import dialogflow from '@google-cloud/dialogflow';
+const dialogflowService = require("../df-service.df");
 
 // Instantiates a session client
 const sessionClient = new dialogflow.SessionsClient({
-    servicePath: '../df-service.df'
+    credentials: dialogflowService
 });
 
 export async function detectIntent(query) {
