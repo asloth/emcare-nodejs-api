@@ -253,6 +253,7 @@ export async function updatePassword(username, password){
 
 export async function updateStatePsicologist(username, newState){
   const oldUser = await db.collection('psicologists').doc(username)
+  var isActive = (newState === 'true');
   //verificamos que exista
   if (!(await oldUser.get()).exists){
     return {
@@ -261,7 +262,7 @@ export async function updateStatePsicologist(username, newState){
   }
   //actualizamos el estado
   return await oldUser.update({
-   state: newState,
+   state: isActive,
  });
 }
 
