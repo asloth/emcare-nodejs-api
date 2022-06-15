@@ -235,10 +235,13 @@ export async function updatePassword(username, password){
   let encryptedPassword = await bcrypt.hash(password, 10);
   //obtenemos el usuario
   const oldUser = await db.collection('psicologists').doc(username)
+  
   //varificamos que exista
-  if (!oldUser.get().exists){
+  if (!(await oldUser.get()).exists){
+    console.log('entre')
+    console.log((await oldUser.get()).exists)
     return {
-      "error": "Usuario no encontrado"
+      "error": "Administrador no encontrado"
     };
   }
   //actualizamos la contraseña
