@@ -203,7 +203,7 @@ export async function getAllUsers(){
 export async function setNewPsicologist(username, password ){
   if (!(password && username)) {
     return {
-      "error": "All input is required"
+      "error": "Complete todos los campos por favor."
     };
   }
   
@@ -211,7 +211,7 @@ export async function setNewPsicologist(username, password ){
   
   if (oldUser.exists) {
     return {
-      "error": "User Already Exist. Please Login"
+      "error": "Usuario ya existe. Por favor inicie sesión"
     };
   }
 
@@ -224,12 +224,62 @@ export async function setNewPsicologist(username, password ){
   
 }
 
+export async function updatePassword(username, password){
+  //verificamos que los datos no esten vacios
+  if (!(password && username)) {
+    return {
+      "error": "Complete todos los campos por favor."
+    };
+  }
+  //encriptamos la contraseña
+  let encryptedPassword = await bcrypt.hash(password, 10);
+  //obtenemos el usuario
+  const oldUser = await db.collection('psicologists').doc(username)
+  //varificamos que exista
+  if (!oldUser.exists){
+    return {
+      "error": "Usuario no encontrado"
+    };
+  }
+  //actualizamos la contraseña
+  return await oldUser.update({
+   password: encryptedPassword,
+ });
+
+}
+
+export async function updateStatePsicologist(username, newState){
+  const oldUser = await db.collection('psicologists').doc(username)
+  //varificamos que exista
+  if (!oldUser.exists){
+    return {
+      "error": "Usuario no encontrado"
+    };
+  }
+  //actualizamos la contraseña
+  return await oldUser.update({
+   state: newState,
+ });
+}
+
+export async function deletePsicologist(username){
+  const oldUser = await db.collection('psicologists').doc(username)
+  //varificamos que exista
+  if (!oldUser.exists){
+    return {
+      "error": "Usuario no encontrado"
+    };
+  }
+
+  return oldUser.delete(); 
+}
+
 export async function login(username, password){
 
   //verificamos que los inputs esten llenos
   if (!(password && username)) {
     return {
-      "error": "All input is required"
+      "error": "Complete todos los campos por favor."
     };
   }
   
@@ -238,20 +288,44 @@ export async function login(username, password){
   
   if (!user.exists){
     return {
-      "error": "User not found"
+      "error": "Usuario no encontrado"
+    };
+  }
+  //verificamos que sea un usuario activo
+  if (!user.get('state')){
+    return {
+      "error": "Usuario desactivado. No puede ingresar."
     };
   }
   
   //comparamos las contraseñas para ver si coinciden
   if (! await bcrypt.compare(password, user.get('password'))){
     return {
-      "error": "Passwords dont match"
+      "error": "Contraseña incorrecta"
     };
   }
-
-  return jwt.sign({
+  //obtenemos el token
+  const token = jwt.sign({
     username: user.username
   }, "secretito", {
     expiresIn: "72h",
   });
+
+  //devolvemos el token e indicamos si es administrador o no
+  return {
+    "token": token,
+    "admin": user.get('admin'),
+  }
+}
+
+export async function getAllAdmins(){
+  let userdocs = [];
+  await db.collection('psicologists').get().then((documentSnapshot) => {
+    documentSnapshot.forEach((doc) => {
+      userdocs.push(doc.data());
+    });
+  }).catch((error) => {
+    console.log("Error getting documents: ", error);
+  });
+  return userdocs;// get collection
 }

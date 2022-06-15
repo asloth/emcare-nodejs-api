@@ -4,11 +4,11 @@ import { fileURLToPath } from 'url';
 import Cors from "cors";
 import { detect_intent_text } from '../routes/ibm.js';
 import { detectIntent } from '../routes/dialogflow.js';
-import { getSentiment, setNewPsicologist,saveSentiment, getUser, updateUser  } from '../routes/firebase.js';
+import { getSentiment, setNewPsicologist,saveSentiment, getUser } from '../routes/firebase.js';
 import { setNewUser, login } from '../routes/firebase.js';
-import { getTendency } from '../routes/firebase.js';
-import { getDataAnalysis } from '../routes/firebase.js';
-import { getAllUsers } from '../routes/firebase.js';
+import { getTendency, updateUser } from '../routes/firebase.js';
+import { getDataAnalysis, updatePassword } from '../routes/firebase.js';
+import { getAllUsers, getAllAdmins, updateStatePsicologist, deletePsicologist } from '../routes/firebase.js';
 import { emotionRecognition } from '../routes/model.js';
 
 const port = process.env.PORT || 3000;
@@ -80,20 +80,42 @@ app.post("/login", async (req, res) => {
   res.json(response);
   });
 
-  //Resgistrar un psicologo
+//Registrar un psicologo
 app.post("/register", async (req, res) => {
   const response = await setNewPsicologist(req.body.username, req.body.password);
   res.json(response);
-  });
-
+});
+//Devuelve el nombre de un usuario movil
 app.post("/get-user", async (req, res) => {
   const response = await getUser(req.body.userid);
   res.json(response);
 });
-
+//Actualiza el nombre de un usuario
 app.post("/update-user", async (req, res) => {
   const response = await updateUser(req.body.userid, req.body.newname);
   res.json(response);
 });
+//Elimina a un psicologo
+app.post("/delete-admin", async (req, res) => {
+  const response = await deletePsicologist(req.body.username);
+  res.json(response);
+});
+
+//cambia la contraseña de un psicologo
+app.post("/update-password", async (req, res) => {
+  const response = await updatePassword(req.body.username,req.body.password );
+  res.json(response);
+});
+
+//cambia el estado de la cuenta de un psicologo
+app.post("/update-state", async (req, res) => {
+  const response = await updateStatePsicologist(req.body.username,req.body.newstate);
+  res.json(response);
+});
+//Devuelve todos los administradores
+app.post('/admins', async (req, res) => {
+  const response = await getAllAdmins();
+  res.json(response);
+})
 
 export default app;
