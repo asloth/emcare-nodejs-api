@@ -318,6 +318,7 @@ export async function login(username, password){
   return {
     "token": token,
     "admin": user.get('admin'),
+    "username": user.get('name'),
   }
 }
 
