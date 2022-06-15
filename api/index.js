@@ -82,7 +82,7 @@ app.post("/login", async (req, res) => {
 
 //Registrar un psicologo
 app.post("/register", async (req, res) => {
-  const response = await setNewPsicologist(req.body.username, req.body.password);
+  const response = await setNewPsicologist(req.body.username, req.body.password, req.body.admin);
   res.json(response);
 });
 //Devuelve el nombre de un usuario movil

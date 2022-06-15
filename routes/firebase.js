@@ -200,7 +200,7 @@ export async function getAllUsers(){
     return userdocs;// get collection
 }
 
-export async function setNewPsicologist(username, password ){
+export async function setNewPsicologist(username, password, admin ){
   if (!(password && username)) {
     return {
       "error": "Complete todos los campos por favor."
@@ -220,6 +220,8 @@ export async function setNewPsicologist(username, password ){
   return await db.collection('psicologists').doc(username).set({
     name: username,
     password: encryptedPassword,
+    admin: admin,
+    state: true,
   }) ;
   
 }
@@ -236,10 +238,8 @@ export async function updatePassword(username, password){
   //obtenemos el usuario
   const oldUser = await db.collection('psicologists').doc(username)
   
-  //varificamos que exista
+  //verificamos que exista
   if (!(await oldUser.get()).exists){
-    console.log('entre')
-    console.log((await oldUser.get()).exists)
     return {
       "error": "Administrador no encontrado"
     };
@@ -253,13 +253,13 @@ export async function updatePassword(username, password){
 
 export async function updateStatePsicologist(username, newState){
   const oldUser = await db.collection('psicologists').doc(username)
-  //varificamos que exista
-  if (!oldUser.exists){
+  //verificamos que exista
+  if (!(await oldUser.get()).exists){
     return {
       "error": "Usuario no encontrado"
     };
   }
-  //actualizamos la contraseña
+  //actualizamos el estado
   return await oldUser.update({
    state: newState,
  });
@@ -267,8 +267,8 @@ export async function updateStatePsicologist(username, newState){
 
 export async function deletePsicologist(username){
   const oldUser = await db.collection('psicologists').doc(username)
-  //varificamos que exista
-  if (!oldUser.exists){
+  //verificamos que exista
+  if (!(await oldUser.get()).exists){
     return {
       "error": "Usuario no encontrado"
     };
