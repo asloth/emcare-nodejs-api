@@ -236,7 +236,7 @@ export async function updatePassword(username, password){
   //obtenemos el usuario
   const oldUser = await db.collection('psicologists').doc(username)
   //varificamos que exista
-  if (!oldUser.exists){
+  if (!oldUser.get().exists){
     return {
       "error": "Usuario no encontrado"
     };
