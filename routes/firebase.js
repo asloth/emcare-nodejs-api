@@ -206,7 +206,7 @@ export async function setNewPsicologist(username, password, admin ){
       "error": "Complete todos los campos por favor."
     };
   }
-  
+  var isAdmin = (admin === 'true');
   const oldUser = await db.collection('psicologists').doc(username).get();
   
   if (oldUser.exists) {
@@ -220,7 +220,7 @@ export async function setNewPsicologist(username, password, admin ){
   return await db.collection('psicologists').doc(username).set({
     name: username,
     password: encryptedPassword,
-    admin: admin,
+    admin: isAdmin,
     state: true,
   }) ;
   
