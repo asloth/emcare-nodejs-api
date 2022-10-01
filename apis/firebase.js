@@ -17,7 +17,9 @@ admin.initializeApp({
     client_email: process.env.CLIENT_EMAIL_FB,
     client_id: process.env.CLIENT_ID_FB,
     auth_uri: process.env.AUTH_URI_FB,
-    token_uri: process.env.TOKEN_URI_FB
+    token_uri: process.env.TOKEN_URI_FB,
+    auth_provider_x509_cert_url: process.env.AUTH_PROVIDER_FB,
+    client_x509_cert_url: process.env.CLIENT_FB
   }),
   storageBucket: 'emcare-99162.appspot.com'
 });
